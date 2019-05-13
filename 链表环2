@@ -1,0 +1,32 @@
+public ListNode detectCycle(ListNode head) {
+        /**
+         * 1、查看是否存在环，如果没有返回null
+         * 2、找到第一个交点
+         * 3、链表头和交点遍历，找到第一个相同的点则为环的入口
+         */
+        if (head == null || head.next == null) {
+            return null;
+        }
+        // 1、使用快慢指针判断是否存在环，如果有找出第一个交点
+        ListNode quick = head;
+        ListNode slow = head;
+        ListNode join = null;
+        while (quick.next != null && quick.next.next != null) {
+            quick = quick.next.next;
+            slow = slow.next;
+            if (quick == slow) {
+                join = quick;
+                break;
+            }
+        }
+        if (join == null) {
+            return null;
+        }
+        // 2、头指针和交点遍历，找到第一个相同的点
+        ListNode tmp = head;
+        while (tmp != join) {
+            tmp = tmp.next;
+            join = join.next;
+        }
+        return tmp;
+    }
